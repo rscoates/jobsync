@@ -51,7 +51,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN apt-get update && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN adduser --system --uid 1001 --home /home/nextjs nextjs
 
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -62,6 +62,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+
+# Set correct permissions
+RUN chown -R nextjs:nodejs /app
 
 USER nextjs
 
