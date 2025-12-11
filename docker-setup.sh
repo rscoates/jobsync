@@ -56,7 +56,7 @@ if [ $? -eq 0 ]; then
     
     # Start the containers
     echo -e "\n${YELLOW}Starting containers...${NC}"
-    docker-compose up -d
+    docker compose up -d
     
     if [ $? -eq 0 ]; then
         echo -e "\n${GREEN}Containers started successfully!${NC}"
