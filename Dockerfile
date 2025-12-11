@@ -52,9 +52,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Install pnpm for running prisma commands
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy node_modules with Prisma Client
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+# Copy the entire node_modules from builder (includes Prisma Client)
+COPY --from=builder /app/node_modules ./node_modules
 
 USER nextjs
 
