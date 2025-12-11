@@ -18,7 +18,7 @@ services:
       - USER_EMAIL=${USER_EMAIL:-admin@example.com}
       - USER_PASSWORD=${USER_PASSWORD:-password123}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
     volumes:
       # Persist SQLite database
       - ./data:/app/data
@@ -26,8 +26,6 @@ services:
       - ./uploads:/app/public/uploads
     networks:
       - jobsync-network
-    depends_on:
-      - ollama
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
       interval: 30s
@@ -35,29 +33,6 @@ services:
       retries: 3
       start_period: 40s
 
-  ollama:
-    image: ollama/ollama:latest
-    container_name: jobsync-ollama
-    restart: unless-stopped
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama-data:/root/.ollama
-    networks:
-      - jobsync-network
-    # Uncomment if you have GPU support on your Raspberry Pi
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
-
 networks:
   jobsync-network:
     driver: bridge
-
-volumes:
-  ollama-data:
-    driver: local
