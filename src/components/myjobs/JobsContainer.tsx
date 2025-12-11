@@ -169,6 +169,9 @@ function JobsContainer({
   const onFilterChange = (filterBy: string) => {
     if (filterBy === "none") {
       reloadJobs();
+    } else if (filterBy === "not-rejected") {
+      setFilterKey(filterBy);
+      loadJobs(1, "not-rejected");
     } else {
       setFilterKey(filterBy);
       loadJobs(1, filterBy);
@@ -230,6 +233,7 @@ function JobsContainer({
                     <SelectItem value="draft">Draft</SelectItem>
                     <SelectItem value="rejected">Rejected</SelectItem>
                     <SelectItem value="PT">Part-time</SelectItem>
+                    <SelectItem value="not-rejected">Not Rejected</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>

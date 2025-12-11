@@ -37,6 +37,7 @@ import { JobResponse, JobStatus } from "@/models/job.model";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { DeleteAlertDialog } from "../DeleteAlertDialog";
+import { SALARY_RANGES } from "@/lib/data/salaryRangeData";
 
 type MyJobsTableProps = {
   jobs: JobResponse[];
@@ -80,6 +81,7 @@ function MyJobsTable({
             <TableHead className="hidden md:table-cell">Location</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="hidden md:table-cell">Source</TableHead>
+            <TableHead className="hidden md:table-cell">Salary</TableHead>
             <TableHead>
               <span className="sr-only">Actions</span>
             </TableHead>
@@ -132,6 +134,9 @@ function MyJobsTable({
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
                   {job.JobSource?.label}
+                </TableCell>
+                <TableCell className="hidden md:table-cell">
+                  £{SALARY_RANGES[+job.salaryRange - 1]?.value ?? "Unknown"}
                 </TableCell>
                 <TableCell>
                   <DropdownMenu>

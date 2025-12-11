@@ -12,6 +12,9 @@
     "test:e2e": "npx playwright test",
     "test:watch": "jest --watch"
   },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
     "@langchain/community": "^0.2.18",

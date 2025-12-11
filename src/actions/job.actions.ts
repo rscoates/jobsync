@@ -40,17 +40,30 @@ export const getJobsList = async (
     }
     const skip = (page - 1) * limit;
 
-    const filterBy = filter
-      ? filter === Object.keys(JOB_TYPES)[1]
-        ? {
-            jobType: filter,
-          }
-        : {
-            Status: {
-              value: filter,
+    let filterBy = {};
+
+    if (filter) {
+      if (filter === Object.keys(JOB_TYPES)[1]) {
+        filterBy = {
+          jobType: filter,
+        };
+      } else if (filter === "not-rejected") {
+        filterBy = {
+          Status: {
+            value: {
+              not: "rejected",
             },
-          }
-      : {};
+          },
+        };
+      } else {
+        filterBy = {
+          Status: {
+            value: filter,
+          },
+        };
+      }
+    }
+
     const [data, total] = await Promise.all([
       prisma.job.findMany({
         where: {
@@ -71,6 +84,7 @@ export const getJobsList = async (
           appliedDate: true,
           description: false,
           Resume: true,
+          salaryRange: true,
         },
         orderBy: {
           createdAt: "desc",
