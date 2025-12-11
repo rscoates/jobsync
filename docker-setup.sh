@@ -49,7 +49,7 @@ fi
 
 # Build the Docker image
 echo -e "\n${YELLOW}Building Docker image (this may take a while on Raspberry Pi)...${NC}"
-docker compose build --no-cache
+docker compose build
 
 if [ $? -eq 0 ]; then
     echo -e "\n${GREEN}Build successful!${NC}"
