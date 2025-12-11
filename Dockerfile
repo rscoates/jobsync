@@ -34,8 +34,8 @@ COPY . .
 RUN echo "=== Generating Prisma Client ===" && \
     pnpm prisma generate --schema=./prisma/schema.prisma && \
     echo "=== Prisma Client Generated Successfully ===" && \
-    ls -la node_modules/.prisma/ && \
-    ls -la node_modules/@prisma/client/
+    find node_modules -name ".prisma" -type d && \
+    find node_modules -name "@prisma" -type d
 
 # Build Next.js
 ENV NEXT_TELEMETRY_DISABLED 1
