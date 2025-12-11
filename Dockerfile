@@ -20,14 +20,21 @@ RUN pnpm install --frozen-lockfile
 FROM base AS builder
 WORKDIR /app
 
+# Install openssl for Prisma on ARM
+RUN apk add --no-cache openssl
+
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Generate Prisma Client
-RUN pnpm prisma generate
+# Generate Prisma Client with verbose logging
+RUN echo "=== Generating Prisma Client ===" && \
+    pnpm prisma generate --schema=./prisma/schema.prisma && \
+    echo "=== Prisma Client Generated Successfully ===" && \
+    ls -la node_modules/.prisma/ || echo "Warning: .prisma directory not found" && \
+    ls -la node_modules/@prisma/client/ || echo "Warning: @prisma/client directory not found"
 
 # Build Next.js
 ENV NEXT_TELEMETRY_DISABLED 1
