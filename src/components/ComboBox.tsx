@@ -28,6 +28,7 @@ import { addCompany } from "@/actions/company.actions";
 import { createJobTitle } from "@/actions/jobtitle.actions";
 import { toast } from "./ui/use-toast";
 import { createActivityType } from "@/actions/activity.actions";
+import { createJobSource } from "@/actions/source.actions";
 
 interface ComboboxProps {
   options: any[];
@@ -50,6 +51,9 @@ export function Combobox({ options, field, creatable }: ComboboxProps) {
           const res = await addCompany({ company: label });
           response = res.data;
           break;
+        case "source":
+          response = await createJobSource(label);
+          break; 
         case "title":
           response = await createJobTitle(label);
           break;

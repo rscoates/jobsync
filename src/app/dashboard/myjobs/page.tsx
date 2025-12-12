@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
-import { getJobSourceList, getStatusList } from "@/actions/job.actions";
+import { getStatusList } from "@/actions/job.actions";
+import { getJobSourceList } from "@/actions/source.actions";
 import JobsContainer from "@/components/myjobs/JobsContainer";
 import { getAllCompanies } from "@/actions/company.actions";
 import { getAllJobTitles } from "@/actions/jobtitle.actions";

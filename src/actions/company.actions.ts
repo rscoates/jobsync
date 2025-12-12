@@ -148,8 +148,8 @@ export const updateCompany = async (
       },
     });
 
-    if (companyExists) {
-      throw new Error("Company already exists!");
+    if (!companyExists) {
+      throw new Error("Company does not exist!");
     }
 
     const res = await prisma.company.update({

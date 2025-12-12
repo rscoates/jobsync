@@ -165,7 +165,7 @@ export function AddJob({
     if (applied) {
       form.getValues("status") === jobStatuses[0].id &&
         setValue("status", jobStatuses[1].id);
-      setValue("dateApplied", new Date());
+      setValue("dateApplied", new Date(), { shouldValidate: true, shouldDirty: true, shouldTouch: true });
     } else {
       resetField("dateApplied");
       setValue("status", jobStatuses[0].id);
@@ -326,7 +326,7 @@ export function AddJob({
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
                         <FormLabel>Job Source</FormLabel>
-                        <Combobox options={jobSources} field={field} />
+                        <Combobox options={jobSources} field={field} creatable />
                         <FormMessage />
                       </FormItem>
                     )}

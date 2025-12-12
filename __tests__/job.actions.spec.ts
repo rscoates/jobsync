@@ -4,11 +4,11 @@ import {
   deleteJobById,
   getJobDetails,
   getJobsList,
-  getJobSourceList,
   getStatusList,
   updateJob,
   updateJobStatus,
 } from "@/actions/job.actions";
+import { getJobSourceList } from "@/actions/source.actions";
 import { getMockJobDetails, getMockJobsList } from "@/lib/mock.utils";
 import { JobResponse } from "@/models/job.model";
 import { getCurrentUser } from "@/utils/user.utils";
