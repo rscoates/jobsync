@@ -9,12 +9,7 @@ export const getAllJobSources = async (): Promise<any | undefined> => {
     if (!user) {
       throw new Error("Not authenticated");
     }
-    const list = await prisma.jobSource.findMany({
-      where: {
-        createdBy: user?.id,
-      },
-    });
-    return list;
+    return prisma.jobSource.findMany();
   } catch (error) {
     const msg = "Failed to fetch job source list. ";
     return handleError(error, msg);
@@ -67,16 +62,6 @@ export const deleteJobSourceById = async (
       throw new Error("Not authenticated");
     }
 
-    const experiences = await prisma.workExperience.count({
-      where: {
-        jobSourceId,
-      },
-    });
-    if (experiences > 0) {
-      throw new Error(
-        `Job source cannot be deleted due to its use in experience section of one of the resume! `
-      );
-    }
     const jobs = await prisma.job.count({
       where: {
         jobSourceId,
@@ -92,7 +77,6 @@ export const deleteJobSourceById = async (
     const res = await prisma.jobSource.delete({
       where: {
         id: jobSourceId,
-        createdBy: user.id,
       },
     });
     return { res, success: true };
